@@ -7,5 +7,5 @@ filled with full and empty cells, the player needs to find all the alive cells
 based on logical conclusions based on the given number of filled sections in 
 each line and column, as represented in the images:
 
-![Unsolved game] (./imgs/unsolved.jpeg);
-![Solution] (./imgs/solved.jpeg);
+![Unsolved game](imgs/unsolved.jpeg);
+![Solution](imgs/solved.jpeg);
