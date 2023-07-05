@@ -58,26 +58,58 @@ int countLC (short** l, short** c, short** m, int n){
 }
 
 // Generates x and y intervals given the program entry
-int genIntvls (char* entry, int *x1, int *x2, int *y1, int *y2){
+int genIntvls (char* entry, int *x1, int *x2, int *y1, int *y2, char* a){
+	char tmp[12];
+	int x1a, x2a, y1a, y2a;
+	if(strchr(entry, ' ') != NULL){
+		sscanf(entry, "%[^ ]%s", &tmp, a);
+	} else { 
+		strcpy(tmp, entry); 
+		*a = 'a';
+	}
 	char xstr[6], ystr[6];
-	if(strchr(entry, ',') == NULL) return 0;
+	if(strchr(entry, ',') == NULL){
+		printf("Parando programa\n");
+		return 0;
+	}
 	sscanf(entry, "%[^,],%s", &xstr, &ystr);
 	
 	if(strchr(xstr, '-') != NULL){
-		sscanf(xstr, "%d-%d", x1, x2);
+		sscanf(xstr, "%d-%d", &x1a, &x2a);
 	} else {
-		sscanf(xstr, "%d", x1);
-		sscanf(xstr, "%d", x2);
+		sscanf(xstr, "%d", &x1a);
+		sscanf(xstr, "%d", &x2a);
 	}
 
 	if(strchr(ystr, '-') != NULL){
-		sscanf(ystr, "%d-%d", y1, y2);
+		sscanf(ystr, "%d-%d", &y1a, &y2a);
 	} else {
-		sscanf(ystr, "%d", y1);
-		sscanf(ystr, "%d", y2);
+		sscanf(ystr, "%d", &y1a);
+		sscanf(ystr, "%d", &y2a);
 	}
-	
-	if(*x1 < 0 || *x2 < 0 || *y1 < 0 || *y2 < 0)
+	if(x1a < 0 || x2a < 0 || y1a < 0 || y2a < 0){
+		printf("x1: %d x2: %d\ny1: %d y2: %d\n", x1a, x2a, y1a, y2a);
 		return 0;
+	}
+	*x1 = x1a-1;
+	*x2 = x2a-1;
+	*y1 = y1a-1;
+	*y2 = y2a-1;
 	return 1;
+}
+
+void revealsLC (short** m, short** gab, int n, int i, int j){
+	int rl = 1;
+	int rc = 1;
+	for(int ia = 0; ia<n; ia++)
+		if(gab[ia][j] == 1 && m[ia][j] != 1) rc = 0;
+	for(int ja = 0; ja<n; ja++)
+		if(gab[i][ja] == 1 && m[i][ja] != 1) rl = 0;
+
+	if(rc)
+		for(int ia = 0; ia<n; ia++)
+			m[ia][j] = gab[ia][j];
+	if(rl)
+		for(int ja = 0; ja<n; ja++)
+			m[i][ja] = gab[i][ja];
 }

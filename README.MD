@@ -9,3 +9,15 @@ each line and column, as represented in the images:
 
 ![Unsolved game](imgs/unsolved.jpeg);
 ![Solution](imgs/solved.jpeg);
+
+## ROADMAP
+
+[x] - print function working
+[x] - modularize so it's possible to add other themes
+[x] - game logic working
+[x] - coordinates can be given by range
+[ ] - Make the game stop on end
+[ ] - Make a difficult system based on size of grid and revealed cells
+[ ] - Add more themes
+[ ] - Add *save drawing* functionality
+[ ] - Add *create drawing* functionality

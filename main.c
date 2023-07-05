@@ -11,6 +11,7 @@ int main(){
 	int x1, x2, y1, y2; 
 	char str[12];
 	char action;
+	int vidas = 3;
 
 	// alocs t odinamic variables
  	m 	= alocMat(n, n);
@@ -25,23 +26,27 @@ int main(){
 
 	printMat(l, c, gab, n);
 	printf("\n");
-	scanf("%s %c", &str, &action);
+	fgets(str, 12, stdin);
 	// Body of program
-	while(genIntvls(str, &y1, &y2, &x1, &x2)){
+	while(genIntvls(str, &y1, &y2, &x1, &x2, &action) && vidas > 0){
 		system("clear");
 		for(int i = x1; i<=x2; i++)
 			for(int j = y1; j<=y2; j++){
 				if(action == 'r' || action == 'R'){
-					if(m[i][j] == 2) printf("ACERTOUi\n");
+					if(m[i][j] != 2) vidas--;
 				}
 				else if(action == 'a' || action == 'A'){
-					if(m[i][j] == 1) printf("ACERTOU\n");
+					if(m[i][j] != 1) vidas--;
 				}
 				gab[i][j] = m[i][j];
+				revealsLC(gab, m, n, i, j);
 			}
 		printMat(l, c, gab, n);
+		printLife(vidas);
+		if(vidas<=0) break;
 		printf("\n");
-		scanf("%s", &str);
+		fgets(str, 12, stdin);
+		if(!strcmp(str, "stop")) break;
 		printf("\n");
 	}
 	

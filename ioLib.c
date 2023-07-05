@@ -16,7 +16,7 @@ void printMat(short** l, short** c, short** m, int n){
 		printf("\t");
 		for(int j = 0; j<n; j++)
 			if(c[i][j]){ 
-				printf("%s%4d%s", LTTRS, c[i][j], NRML);
+				printf("%s%3d %s", LTTRS, c[i][j], NRML);
 			} else printf("%s    %s", LTTRS, NRML);
 		printf("\n");
 	}
@@ -39,7 +39,7 @@ void printMat(short** l, short** c, short** m, int n){
 			} else
 				printf("%sXXXX%s", XX, NRML);
 		}
-		printf(" %2d\n", i);
+		printf(" %2d\n", i+1);
 		for(int ip = 0; ip<n/2; ip++) printf("%s   %s", LTTRS, NRML);
 		printf("\t");
 		for(int j = 0; j<n; j++){
@@ -55,6 +55,10 @@ void printMat(short** l, short** c, short** m, int n){
 	for(int i = 0; i<n/2; i++) printf("   ");
 	printf("\t");
 	for(int i = 0; i<n; ++i)
-		printf("%4d", i);
+		printf("%3d ", i+1);
 	printf("\n\n");
+}
+
+void printLife(int life){
+	printf("%sLIFES LEFT: %d%s\n", XX, life, NRML);
 }
