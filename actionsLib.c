@@ -113,3 +113,28 @@ void revealsLC (short** m, short** gab, int n, int i, int j){
 		for(int ja = 0; ja<n; ja++)
 			m[i][ja] = gab[i][ja];
 }
+
+int validatesPlay (int x1, int x2, int y1, int y2, char action, int* vidas, short** gab, short** m, int n){
+	int errors = 0;
+	for(int i = x1; i<=x2; i++)
+		for(int j = y1; j<=y2; j++){
+			if((action == 'r' || action == 'R') && m[i][j] != 2){
+				*vidas = *vidas-1;
+				errors++;
+			} else if ((action == 'a' || action == 'A') && m[i][j] != 1){
+				*vidas = *vidas-1;
+				errors++;
+			}
+			gab[i][j] = m[i][j];
+			revealsLC(gab,m,n,i,j);
+		}
+		return errors;
+}
+
+int checkWin(short** gab, int n){
+	for(int i = 0; i<n; i++)
+		for(int j = 0; j<n; j++)
+			if(!gab[i][j]) 
+				return 0;
+	return 1;
+}

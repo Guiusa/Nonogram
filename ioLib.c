@@ -59,6 +59,10 @@ void printMat(short** l, short** c, short** m, int n){
 	printf("\n\n");
 }
 
-void printLife(int life){
+void printLife(int life, int lost){
+	if(lost==1)
+		printf("%sYOU LOST %d LIFE IN THE LAST PLAY%s\n", XX, lost, NRML);
+	if(lost>1)
+		printf("%sYOU LOST %d LIFES IN THE LAST PLAY%s\n", XX, lost, NRML);
 	printf("%sLIFES LEFT: %d%s\n", XX, life, NRML);
 }
