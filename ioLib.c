@@ -66,3 +66,20 @@ void printLife(int life, int lost){
 		printf("%sYOU LOST %d LIFES IN THE LAST PLAY%s\n", XX, lost, NRML);
 	printf("%sLIFES LEFT: %d%s\n", XX, life, NRML);
 }
+
+void printEnd(int WL, short** m, int n){
+	printf("\n");
+	for(int i = 0; i<n; i++)
+		for(int k = 0; k<2; k++){
+			for(int j = 0; j<n; j++)
+				if(m[i][j] == 1){
+					printf("%s████%s", FOUND, NRML);
+				} else
+					printf("%sXXXX%s", XX, NRML);
+			printf("\n");
+		}
+	if(WL){
+		printf("%s\nYOU WON!!%s\n", XX, NRML);
+	} else
+		printf("%s\nYOU LOST ALL YOUR LIFES!!%s\n", XX, NRML);
+}

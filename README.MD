@@ -16,7 +16,8 @@ each line and column, as represented in the images:
 - [x] modularize so it's possible to add other themes
 - [x] game logic working
 - [x] coordinates can be given by range
-- [ ] Make the game stop on end
+- [x] Make the game stop on end
+- [ ] Filters player input based on boundaries (input not bigger than n or less than 0)
 - [ ] Make a difficult system based on size of grid and revealed cells
 - [ ] Add more themes
 - [ ] Add *save drawing* functionality

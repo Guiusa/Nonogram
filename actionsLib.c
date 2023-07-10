@@ -134,7 +134,15 @@ int validatesPlay (int x1, int x2, int y1, int y2, char action, int* vidas, shor
 int checkWin(short** gab, int n){
 	for(int i = 0; i<n; i++)
 		for(int j = 0; j<n; j++)
-			if(!gab[i][j]) 
+			if(!gab[i][j])
 				return 0;
 	return 1;
+}
+
+int revealsX(short** gab, short** m, int n){
+	int count = 0;
+	for(int i = 0; i<n; i++)
+		for(int j = 0; j<n; j++)
+			if(m[i][j] == 2 && rand()%10 > 8)
+				gab[i][j] = 2;
 }

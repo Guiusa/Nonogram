@@ -6,7 +6,7 @@
 int main(){
 	// Initial declarations
 	srand(time(0));
-	int n = 5;
+	int n = 10;
 	short **gab, **m, **l, **c; 
 	int x1, x2, y1, y2; 
 	char str[12];
@@ -23,6 +23,7 @@ int main(){
 	// Initializes matrixes	
 	randMat(m, n);
 	countLC(l, c, m, n);
+	revealsX(gab, m, n);
 	x1 = 0; x2 = 0; y1 = 0; y2 = 0;
 
 	printMat(l, c, gab, n);
@@ -35,12 +36,18 @@ int main(){
 		lost = validatesPlay(x1, x2, y1, y2, action, &vidas, gab, m, n);
 		printMat(l, c, gab, n);
 		printLife(vidas, lost);
-		if(vidas<=0) break;
+		if(vidas<=0){
+			printEnd(0, m, n);
+			break;
+		}
+		if(checkWin(gab, n)){
+			printEnd(1, m, n);
+			break;
+		}
 		printf("\n");
 		fgets(str, 12, stdin);
 		if(!strcmp(str, "stop")) break;
 		printf("\n");
-		if(checkWin) break;
 	}
 	
 	// Free of dinamic variables
