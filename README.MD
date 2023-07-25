@@ -17,8 +17,11 @@ each line and column, as represented in the images:
 - [x] game logic working
 - [x] coordinates can be given by range
 - [x] Make the game stop on end
-- [ ] Filters player input based on boundaries (input not bigger than n or less than 0)
-- [ ] Make a difficult system based on size of grid and revealed cells
-- [ ] Add more themes
+- [x] Filters player input based on boundaries (input not bigger than n or less than 0)
+- [x] Make a difficult system based on size of grid and revealed cells
+- [x] Add more themes
 - [ ] Add *save drawing* functionality
 - [ ] Add *create drawing* functionality
+- [ ] Refactor print functions to use ansi characters and make them less dumb
+- [x] Substitute system("clear") by ansi characters
+- [ ] Make an error/usage output function

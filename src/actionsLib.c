@@ -2,20 +2,26 @@
 #include <stdio.h>
 // Randomizes drawings in the matrix
 int randMat (short** m, int n){
-	int bounds[2] = {30, 90};
 	int count = 0;
-	int prob;
 	for(int i = 0; i<n; i++)
 		for(int j = 0; j<n; j++){
-			int summ = 0;
-			if((i>0) && (j>0 && j<n-1)){
-				for(int iaux = -1; iaux<=1; ++iaux)
-					summ += m[i-1][j+iaux];
-				summ += m[i][j-1];
-			}
-			prob = (summ) ? bounds[0] : bounds[1];
-			m[i][j] = (rand()%100 > prob) ? 1 : 2;
+			m[i][j] = (rand()%100 > 45) ? 1 : 2;
 		}
+
+	int c = rand()%(n/2);
+	for(int ip = 0; ip<c; ip++){
+		int lc = rand()%2;
+		if(lc){
+			int j = rand()%n;
+			for(int i = 0; i<n; i++)
+				m[i][j] = 1;
+		}
+		else {
+			int i = rand()%n;
+			for(int j = 0; j<n; j++)
+				m[i][j] = 1;
+		}
+	}
 }
 
 // Counts amount of consecutive squares on line and column
@@ -143,6 +149,6 @@ int revealsX(short** gab, short** m, int n){
 	int count = 0;
 	for(int i = 0; i<n; i++)
 		for(int j = 0; j<n; j++)
-			if(m[i][j] == 2 && rand()%10 > 8)
+			if(m[i][j] == 2 && rand()%100 > 65)
 				gab[i][j] = 2;
 }

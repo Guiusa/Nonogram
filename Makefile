@@ -1,10 +1,8 @@
-OBJS= memLib.c ioLib.c actionsLib.c
+OBJS= src/memLib.c src/ioLib.c src/actionsLib.c
 
 all:
-	gcc main.c ${OBJS} -o nonogram
-
-teste:
-	gcc teste.c -o teste
+	gcc src/main.c ${OBJS} -o nonogram
 
 purge:
-	rm -f nonogram teste
+	@echo "Removing programs"
+	@rm -f nonogram
