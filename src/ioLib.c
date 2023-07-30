@@ -1,13 +1,5 @@
 #include "ioLib.h"
 
-/*
-HIDN 	"\e[0;90m";
-FOUND "\e[0;36m";
-XX		"\e[0;107m\e[1;35m";
-LTTRS "\e[1;100m";
-NRML 	"\e[0m";
-*/
-
 theme* alocTheme(){
 	theme* t = malloc(sizeof(theme));
 	t->HIDN 	= malloc(20 * sizeof(char));
@@ -164,4 +156,67 @@ int chooseSize(theme* t){
 		scanf("%d", &k);
 	}
 	return k*5;
+}
+
+void error(theme* t, char* err, char* usg){
+	printf("\e[1;31m%s\e[0m\n", err);
+	if(usg)
+		printf("%s%s%s\n", t->XX, usg, t->NRML);
+}
+
+void print5Grid(){
+	//	┏━━━━━━━━━━━━━━━━━━━━━━━━┓
+	printf("%s%s%s%s%s%s%s\n", CORNER_TL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_TR);
+	
+	//	┃                        ┃
+	for(int i = 0; i<10; i++)
+		printf("%s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V);
+	
+	//	┗━━━━━━━━━━━━━━━━━━━━━━━━┛
+	printf("%s%s%s%s%s%s%s\n", CORNER_BL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_BR);
+}
+
+void print10Grid(){
+	//	┏━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  CORNER_TL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_T, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_TR);
+
+	//	┃                        ┃                        ┃
+	for(int i = 0; i<10; i++)
+		printf("%s  %s%s%s%s%s  %s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
+
+	//	┣━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━┫
+	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  MIDDLE_L, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_R);
+
+	//	┃                        ┃                        ┃
+	for(int i = 0; i<10; i++)
+		printf("%s  %s%s%s%s%s  %s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
+
+	//	┗━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━┛
+	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  CORNER_BL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_B, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_BR);
+}
+
+void print15Grid(){
+	//	┏━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  CORNER_TL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_T, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_T, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_TR);
+
+	//	┃                        ┃                        ┃                        ┃
+	for(int i = 0; i<10; i++)
+		printf("%s  %s%s%s%s%s  %s  %s%s%s%s%s  %s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
+
+	//	┣━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━┫
+	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  MIDDLE_L, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_R);
+
+	//	┃                        ┃                        ┃                        ┃
+	for(int i = 0; i<10; i++)
+		printf("%s  %s%s%s%s%s  %s  %s%s%s%s%s  %s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
+
+	//	┣━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━┫
+	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  MIDDLE_L, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_R);
+
+	//	┃                        ┃                        ┃                        ┃
+	for(int i = 0; i<10; i++)
+		printf("%s  %s%s%s%s%s  %s  %s%s%s%s%s  %s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
+
+	//	┗━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━┛
+	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  CORNER_BL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_B, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_B, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_BR);
 }

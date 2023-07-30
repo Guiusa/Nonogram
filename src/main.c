@@ -42,6 +42,7 @@ int main(int argc, char **argv){
 
 	clear();
 	getchar();
+	print5Grid();
 	printMat(tm, l, c, gab, n);
 	fgets(str, 12, stdin);
 	
@@ -62,6 +63,8 @@ int main(int argc, char **argv){
 			printEnd(tm, 1, m, n);
 			break;
 		}
+		print5Grid();
+		print10Grid();
 		printMat(tm, l, c, gab, n);
 		printLife(tm, vidas, lost);
 		printf("\n");

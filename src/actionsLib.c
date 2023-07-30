@@ -8,7 +8,7 @@ int randMat (short** m, int n){
 			m[i][j] = (rand()%100 > 45) ? 1 : 2;
 		}
 
-	int c = rand()%(n/2);
+	int c = rand()%(n/2) + n/4;
 	for(int ip = 0; ip<c; ip++){
 		int lc = rand()%2;
 		if(lc){
@@ -22,6 +22,22 @@ int randMat (short** m, int n){
 				m[i][j] = 1;
 		}
 	}
+	
+	for(int ip = 0; ip<c; ip++){
+		int lc = rand()%2;
+		int init = rand()%(n/2);
+		if(lc){
+			int j = rand()%n;
+			for(int i = 0; i<n/2; i++)
+				m[i+init][j] = 1;
+		}
+		else {
+			int i = rand()%n;
+			for(int j = 0; j<n/2; j++)
+				m[i][j+init] = 1;
+		}
+	}
+
 }
 
 // Counts amount of consecutive squares on line and column

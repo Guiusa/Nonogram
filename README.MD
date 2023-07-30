@@ -24,4 +24,4 @@ each line and column, as represented in the images:
 - [ ] Add *create drawing* functionality
 - [ ] Refactor print functions to use ansi characters and make them less dumb
 - [x] Substitute system("clear") by ansi characters
-- [ ] Make an error/usage output function
+- [x] Make an error/usage output function
