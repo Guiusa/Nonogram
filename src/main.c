@@ -31,8 +31,8 @@ int main(int argc, char **argv){
 	n = chooseSize(tm);
  	m 	= alocMat(n, n);
 	gab	= alocMat(n, n);
-	l		= alocMat(n, n/2);
-	c		= alocMat(n/2, n);
+	l		= alocMat(n, n/2 + 1);
+	c		= alocMat(n/2 + 1, n);
 	
 	// Initializes matrixes	
 	randMat(m, n);
@@ -42,8 +42,11 @@ int main(int argc, char **argv){
 
 	clear();
 	getchar();
-	print5Grid();
-	printMat(tm, l, c, gab, n);
+	printSeq(tm, l, c, n);
+	printGrid(n);
+	printMat(tm, gab, n);
+	printLife(tm, vidas, lost, n);
+	printInputLine();
 	fgets(str, 12, stdin);
 	
 	//Body of program
@@ -53,7 +56,7 @@ int main(int argc, char **argv){
 			fgets(str, 12, stdin);
 			continue;
 		}
-		clear();
+		//clear();
 		lost = validatesPlay(x1, x2, y1, y2, action, &vidas, gab, m, n);
 		if(vidas<=0){
 			printEnd(tm, 0, m, n);
@@ -63,11 +66,9 @@ int main(int argc, char **argv){
 			printEnd(tm, 1, m, n);
 			break;
 		}
-		print5Grid();
-		print10Grid();
-		printMat(tm, l, c, gab, n);
-		printLife(tm, vidas, lost);
-		printf("\n");
+		printMat(tm, gab, n);
+		printLife(tm, vidas, lost, n);
+		printInputLine();
 		fgets(str, 12, stdin);
 		if(!strcmp(str, "stop")) break;
 		printf("\n");

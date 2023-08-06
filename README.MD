@@ -22,6 +22,7 @@ each line and column, as represented in the images:
 - [x] Add more themes
 - [ ] Add *save drawing* functionality
 - [ ] Add *create drawing* functionality
-- [ ] Refactor print functions to use ansi characters and make them less dumb
+- [x] Refactor print functions to use ansi characters and make them less dumb
 - [x] Substitute system("clear") by ansi characters
 - [x] Make an error/usage output function
+- [ ] Add comments in all files so my code is more clear

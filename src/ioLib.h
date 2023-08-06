@@ -26,12 +26,12 @@ typedef struct {
 theme* alocTheme();
 void freeTheme(theme* t);
 void chooseTheme(theme* t);
-void printMat(theme* t, short**l, short** c, short** m, int n);
-void printLife(theme* t, int life, int lost);
+void printMat(theme* t, short** m, int n);
+void printSeq(theme* t, short** l, short** c, int n);
+void printLife(theme* t, int life, int lost, int n);
 void printEnd(theme* t, int WL, short** m, int n);
+void printInputLine();
 void clear();
 int chooseSize(theme* t);
 void error(theme* t, char* err, char* usg);
-void print5Grid();
-void print10Grid();
-void print15Grid();
+void printGrid(int n);

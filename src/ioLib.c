@@ -65,65 +65,63 @@ void chooseTheme(theme* t){
 	strcpy(t->NRML, "\e[0m");
 }
 
-void printMat(theme* t, short** l, short** c, short** m, int n){
-	/*
-	# This loop iters over columns array (c) to print sections found
-	# in each column
-	*/
-	for(int i = 0; i<n/2; i++){
-		for(int i = 0; i<n/2; i++) printf("   ");
-		printf("\t");
-		for(int j = 0; j<n; j++)
+void printSeq(theme* t, short** l, short** c, int n){
+	int gap_j = ((n/2+1)*3) + 2;
+	for(int i = 0; i<n/2 + 1; i++){
+		for(int j = 0; j<n; j++){
+			printf("\e[%d;%dH", i+1, j*4 + gap_j + (j/5));
 			if(c[i][j]){ 
 				printf("%s%3d %s", t->LTTRS, c[i][j], t->NRML);
 			} else printf("%s    %s", t->LTTRS, t->NRML);
-		printf("\n");
+		}
 	}
-	printf("\n");
-	/*
-	# For each line, prints the sections found in (l) and then prints the
-	# squares
-	*/
-	for(int i = 0; i<n; ++i){
-		for(int jp = 0; jp < n/2; jp++)
-			if(l[i][jp]){ 
-				printf("%s%3d%s", t->LTTRS, l[i][jp], t->NRML);
+
+	int gap_i = (n/2) + 3;
+	for(int i = 0; i<n; i++){
+		printf("\e[%d;1H", (i*2)+gap_i + (i/5));
+		for(int j = 0; j<n/2 + 1; j++){
+			if(l[i][j]){
+				printf("%s%3d%s", t->LTTRS, l[i][j], t->NRML);
 			} else printf("%s   %s", t->LTTRS, t->NRML);
-		printf("\t");
-		for(int j = 0; j<n; ++j){
-			if(!m[i][j]){
+		}
+		printf("\e[%d;1H", (i*2)+gap_i+1+(i/5));
+		for(int j = 0; j<n/2 + 1; j++)
+			printf("%s   %s", t->LTTRS, t->NRML);
+	}
+
+	
+	for(int k = 0; k<n; k++){
+		printf("\e[%d;%dH%d", gap_i + (k*2) + (k/5), gap_j + n*4 + (n/5+1), k+1);
+		printf("\e[%d;%dH %2d ", gap_i + (n*2) + (n/5), gap_j + (k*4) + (k/5), k+1);
+	}
+}
+
+void printMat(theme* t, short** m, int n){
+	int gap_i = n/2 + 3;
+	int gap_j = 3*(n/2 + 1) + 2;
+	for(int i = 0; i < n * 2; i++){
+		for(int j = 0; j<n; j++){
+			printf("\e[%d;%dH", i + gap_i + i/10, j*4 + gap_j + j/5);
+			if(!m[i/2][j]){
 				printf("%s████%s", t->HIDN, t->NRML);
-			} else if (m[i][j] == 1){
+			} else if (m[i/2][j] == 1){
 				printf("%s████%s", t->FOUND, t->NRML);
 			} else
 				printf("%sXXXX%s", t->XX, t->NRML);
 		}
-		printf(" %2d\n", i+1);
-		for(int ip = 0; ip<n/2; ip++) printf("%s   %s", t->LTTRS, t->NRML);
-		printf("\t");
-		for(int j = 0; j<n; j++){
-			if(!m[i][j]){
-				printf("%s████%s", t->HIDN, t->NRML);
-			} else if (m[i][j] == 1){
-				printf("%s████%s", t->FOUND, t->NRML);
-			} else
-				printf("%sXXXX%s", t->XX, t->NRML);	
-		}
-		printf("\n");
 	}
-	for(int i = 0; i<n/2; i++) printf("   ");
-	printf("\t");
-	for(int i = 0; i<n; ++i)
-		printf("%3d ", i+1);
-	printf("\n\n");
 }
 
-void printLife(theme* t, int life, int lost){
+void printLife(theme* t, int life, int lost, int n){
+	int gap_i = (n/2+1) + (n*2) + (n/5+1) + 2;
+	printf("\e[%d;1H", gap_i); 
 	if(lost==1)
-		printf("%sYOU LOST %d LIFE IN THE LAST PLAY%s\n", t->XX, lost, t->NRML);
+		printf(" %s \e[1;31mYOU LOST %d LIFE IN THE LAST PLAY%s\n", t->XX, lost, t->NRML);
 	if(lost>1)
-		printf("%sYOU LOST %d LIFES IN THE LAST PLAY%s\n", t->XX, lost, t->NRML);
-	printf("%sLIFES LEFT: %d%s\n", t->XX, life, t->NRML);
+		printf(" %s \e[1;31mYOU LOST %d LIVES IN THE LAST PLAY%s\n", t->XX, lost, t->NRML);
+	if(!lost)
+		printf(" %s                                  %s\n", t->XX, t->NRML);
+	 printf(" %s          LIVES LEFT: %d           %s\n", t->XX, life, t->NRML);
 }
 
 void printEnd(theme* t, int WL, short** m, int n){
@@ -165,58 +163,86 @@ void error(theme* t, char* err, char* usg){
 }
 
 void print5Grid(){
+	int gap_i = 4;
+	int gap_j = 10;
+
 	//	┏━━━━━━━━━━━━━━━━━━━━━━━━┓
-	printf("%s%s%s%s%s%s%s\n", CORNER_TL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_TR);
+	printf("\e[%d;%dH%s%s%s%s%s%s\n", gap_i, gap_j, CORNER_TL, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_TR);
 	
 	//	┃                        ┃
 	for(int i = 0; i<10; i++)
-		printf("%s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V);
+		printf("\e[%d;%dH%s  %s%s%s%s  %s\n", gap_i + i + 1, gap_j, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V);
 	
 	//	┗━━━━━━━━━━━━━━━━━━━━━━━━┛
-	printf("%s%s%s%s%s%s%s\n", CORNER_BL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_BR);
+	printf("\e[%d;%dH%s%s%s%s%s%s\n", gap_i + 11, gap_j, CORNER_BL, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_BR);
 }
 
 void print10Grid(){
+	int gap_i = 7;
+	int gap_j = 19;
 	//	┏━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
-	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  CORNER_TL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_T, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_TR);
+	printf("\e[%d;%dH%s%s%s%s%s%s%s%s%s%s%s\n", gap_i, gap_j, CORNER_TL, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_T, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_TR);
 
 	//	┃                        ┃                        ┃
 	for(int i = 0; i<10; i++)
-		printf("%s  %s%s%s%s%s  %s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
+		printf("\e[%d;%dH%s  %s%s%s%s  %s  %s%s%s%s  %s\n", gap_i + i + 1, gap_j,  LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
 
+	gap_i += 11;
 	//	┣━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━┫
-	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  MIDDLE_L, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_R);
+	printf("\e[%d;%dH%s%s%s%s%s%s%s%s%s%s%s\n", gap_i, gap_j,  MIDDLE_L, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_R);
 
 	//	┃                        ┃                        ┃
 	for(int i = 0; i<10; i++)
-		printf("%s  %s%s%s%s%s  %s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
-
+		printf("\e[%d;%dH%s  %s%s%s%s  %s  %s%s%s%s  %s\n", gap_i + i + 1, gap_j,  LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
+	
+	gap_i += 11;
 	//	┗━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━┛
-	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  CORNER_BL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_B, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_BR);
+	printf("\e[%d;%dH%s%s%s%s%s%s%s%s%s%s%s\n", gap_i, gap_j, CORNER_BL, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_B, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_BR);
 }
 
 void print15Grid(){
+	int gap_i = 9;
+	int gap_j = 25;
+
 	//	┏━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
-	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  CORNER_TL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_T, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_T, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_TR);
+	printf("\e[%d;%dH%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n", gap_i, gap_j,  CORNER_TL, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_T, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_T, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_TR);
 
 	//	┃                        ┃                        ┃                        ┃
 	for(int i = 0; i<10; i++)
-		printf("%s  %s%s%s%s%s  %s  %s%s%s%s%s  %s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
+		printf("\e[%d;%dH%s  %s%s%s%s  %s  %s%s%s%s  %s  %s%s%s%s  %s\n", gap_i + i + 1, gap_j, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
+
+	gap_i += 11;
 
 	//	┣━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━┫
-	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  MIDDLE_L, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_R);
+	printf("\e[%d;%dH%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n", gap_i, gap_j, MIDDLE_L, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_R);
 
 	//	┃                        ┃                        ┃                        ┃
 	for(int i = 0; i<10; i++)
-		printf("%s  %s%s%s%s%s  %s  %s%s%s%s%s  %s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
+		printf("\e[%d;%dH%s  %s%s%s%s  %s  %s%s%s%s  %s  %s%s%s%s  %s\n", gap_i + i + 1, gap_j, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
 
+	gap_i += 11;
+	
 	//	┣━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━┫
-	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  MIDDLE_L, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_R);
+	printf("\e[%d;%dH%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n", gap_i, gap_j, MIDDLE_L, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_C, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_R);
 
-	//	┃                        ┃                        ┃                        ┃
 	for(int i = 0; i<10; i++)
-		printf("%s  %s%s%s%s%s  %s  %s%s%s%s%s  %s  %s%s%s%s%s  %s\n", LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
+		printf("\e[%d;%dH%s  %s%s%s%s  %s  %s%s%s%s  %s  %s%s%s%s  %s\n", gap_i + i + 1, gap_j, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V, EMPTY, EMPTY, EMPTY, EMPTY, LINE_V); 
 
-	//	┗━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━┛
-	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",  CORNER_BL, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_B, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_B, LINE_H, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_BR);
+	gap_i += 11;
+	
+		//	┗━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━┛
+	printf("\e[%d;%dH%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n", gap_i, gap_j, CORNER_BL, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_B, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_B, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_BR);
+}
+
+void printInputLine(){
+	printf("               <-- YOUR INPUT HERE\r");
+}
+
+void printGrid(int n){
+	if(n == 5){
+		print5Grid();
+	}	else if (n == 10) {
+		print10Grid();
+	} else
+		print15Grid();
 }
