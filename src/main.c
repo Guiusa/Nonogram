@@ -3,6 +3,7 @@
 #include "actionsLib.h"
 #include <time.h>
 
+// To be used
 void show_help(){
 	printf("\
 	[USAGE] nonogram\n\
@@ -25,7 +26,7 @@ int main(int argc, char **argv){
 
 	clear();
 	
-	// alocs t odinamic variables
+	// alocs dinamic variables
 	tm 	= alocTheme();
 	chooseTheme(tm);
 	n = chooseSize(tm);
@@ -38,25 +39,41 @@ int main(int argc, char **argv){
 	randMat(m, n);
 	countLC(l, c, m, n);
 	revealsX(gab, m, n);
-	x1 = 0; x2 = 0; y1 = 0; y2 = 0;
 
 	clear();
+	/*
+		this getchar is taking residue input from above functions, i don't really
+		know what this does but if a take it off the pogram breaks with segfault
+		:) 
+	*/
 	getchar();
+	
+	// Static graphics that needs to be printed just once
 	printSeq(tm, l, c, n);
 	printGrid(n);
+
+	// These need to be printed at each play on the game
 	printMat(tm, gab, n);
 	printLife(tm, vidas, lost, n);
 	printInputLine();
+
+	// Gets the player input to be interpreted by genIntvls
 	fgets(str, 12, stdin);
 	
-	//Body of program
+	/* 
+		genIntvls take the input string and translates in x and y intervals
+		also says if a play is for adding or removing
+	*/
 	while(genIntvls(str, &y1, &y2, &x1, &x2, &action) && vidas > 0){
 		if(x1<0 || y1<0 || x2>=n || y2>=n){
 			printf("Bad interval given\n");
 			fgets(str, 12, stdin);
 			continue;
 		}
-		//clear();
+	
+		/*
+			Validates a play and stores the total of lifes lost in the variable
+		*/
 		lost = validatesPlay(x1, x2, y1, y2, action, &vidas, gab, m, n);
 		if(vidas<=0){
 			printEnd(tm, 0, m, n);
