@@ -1,5 +1,6 @@
 #include "ioLib.h"
 
+// Manage memory occupied by a theme structure 
 theme* alocTheme(){
 	theme* t = malloc(sizeof(theme));
 	t->HIDN 	= malloc(20 * sizeof(char));
@@ -18,7 +19,11 @@ void freeTheme(theme* t){
 	free(t->NRML);
 	free(t);
 }
+//##############################################################################
 
+/*
+* Interface to choose a theme to the game
+*/
 void chooseTheme(theme* t){
 	printf("CHOOSE A THEME:\n\n");
 	printf("(1)\tHatsune Miku\t\t\t");
@@ -65,6 +70,10 @@ void chooseTheme(theme* t){
 	strcpy(t->NRML, "\e[0m");
 }
 
+/*
+*	Prints all sequences found in the matrix after the random algoritm found in
+* actionsLib.h
+*/
 void printSeq(theme* t, short** l, short** c, int n){
 	int gap_j = ((n/2+1)*3) + 2;
 	for(int i = 0; i<n/2 + 1; i++){
@@ -96,6 +105,10 @@ void printSeq(theme* t, short** l, short** c, int n){
 	}
 }
 
+/*
+* Prints the squares visible by player accordingly to the value in each cell
+* of the matrix
+*/
 void printMat(theme* t, short** m, int n){
 	int gap_i = n/2 + 3;
 	int gap_j = 3*(n/2 + 1) + 2;
@@ -112,6 +125,10 @@ void printMat(theme* t, short** m, int n){
 	}
 }
 
+/*
+* Prints available lives and, if the player lost any life in last play, prints
+* that info too
+*/
 void printLife(theme* t, int life, int lost, int n){
 	int gap_i = (n/2+1) + (n*2) + (n/5+1) + 2;
 	printf("\e[%d;1H", gap_i); 
@@ -124,6 +141,9 @@ void printLife(theme* t, int life, int lost, int n){
 	 printf(" %s          LIVES LEFT: %d           %s\n", t->XX, life, t->NRML);
 }
 
+/*
+* Reveals all cells to player and a message of win or loss
+*/
 void printEnd(theme* t, int WL, short** m, int n){
 	printf("\n");
 	for(int i = 0; i<n; i++)
@@ -141,10 +161,17 @@ void printEnd(theme* t, int WL, short** m, int n){
 		printf("%s\nYOU LOST ALL YOUR LIFES!!%s\n", t->XX, t->NRML);
 }
 
+/*
+* Clears the screen with ansii sequences
+*/
 void clear(){
 	printf("\e[2J\e[H");
 }
 
+/*
+* Interface so the player can choose if the matrix will have 5, 10 or 15 lines
+* and column
+*/
 int chooseSize(theme* t){
 	int k;
 	printf("%sCHOOSE THE GRID SIZE:\n(1) - 5\n(2) - 10\n(3) - 15%s\n", t->XX, t->NRML);
@@ -156,6 +183,9 @@ int chooseSize(theme* t){
 	return k*5;
 }
 
+/*
+* Debug function, prints error and correct usage in program calling
+*/
 void error(theme* t, char* err, char* usg){
 	printf("\e[1;31m%s\e[0m\n", err);
 	if(usg)
@@ -234,10 +264,11 @@ void print15Grid(){
 	printf("\e[%d;%dH%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n", gap_i, gap_j, CORNER_BL, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_B, LINE_H, LINE_H, LINE_H, LINE_H, MIDDLE_B, LINE_H, LINE_H, LINE_H, LINE_H, CORNER_BR);
 }
 
-void printInputLine(){
-	printf("               <-- YOUR INPUT HERE\r");
-}
-
+/*
+* Accordingly with to matrix size, calls one of the tree imediatly above 
+* functions to print the grid with special character
+* Yeah i know it could be better done
+*/
 void printGrid(int n){
 	if(n == 5){
 		print5Grid();
@@ -245,4 +276,11 @@ void printGrid(int n){
 		print10Grid();
 	} else
 		print15Grid();
+}
+
+/*
+* prints the line were the player's input will be drawn
+*/
+void printInputLine(){
+	printf("               <-- YOUR INPUT HERE\r");
 }

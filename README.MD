@@ -25,4 +25,4 @@ each line and column, as represented in the images:
 - [x] Refactor print functions to use ansi characters and make them less dumb
 - [x] Substitute system("clear") by ansi characters
 - [x] Make an error/usage output function
-- [ ] Add comments in all files so my code is more clear
+- [ ] Add comments in memLib file so the code is more clear

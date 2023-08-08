@@ -26,25 +26,25 @@ typedef struct {
 	char* NRML;
 } theme;
 
-// Manage memory occupied by a theme structure 
 theme* alocTheme();
 void freeTheme(theme* t);
 
-/*
-* Interface to choose a theme user-side
-* theme *t variable is an allocated theme that stores the choice
-*/
 void chooseTheme(theme* t);
 
-/*
-
-*/
 void printMat(theme* t, short** m, int n);
+
 void printSeq(theme* t, short** l, short** c, int n);
+
 void printLife(theme* t, int life, int lost, int n);
+
 void printEnd(theme* t, int WL, short** m, int n);
+
 void printInputLine();
+
 void clear();
+
 int chooseSize(theme* t);
+
 void error(theme* t, char* err, char* usg);
+
 void printGrid(int n);

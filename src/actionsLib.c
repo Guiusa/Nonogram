@@ -1,13 +1,18 @@
 #include "actionsLib.h"
 #include <stdio.h>
-// Randomizes drawings in the matrix
+/*
+* Randomizes drawings in the matrix
+* I thinks this is an interesting algoritm to study and make it better
+*/
 int randMat (short** m, int n){
 	int count = 0;
+	// randomizes unique cells
 	for(int i = 0; i<n; i++)
 		for(int j = 0; j<n; j++){
 			m[i][j] = (rand()%100 > 45) ? 1 : 2;
 		}
 
+	// randomizes sequences of n cells
 	int c = rand()%(n/2) + n/4;
 	for(int ip = 0; ip<c; ip++){
 		int lc = rand()%2;
@@ -23,6 +28,7 @@ int randMat (short** m, int n){
 		}
 	}
 	
+	// randomizes sequences of n/2 cells
 	for(int ip = 0; ip<c; ip++){
 		int lc = rand()%2;
 		int init = rand()%(n/2);
@@ -40,7 +46,11 @@ int randMat (short** m, int n){
 
 }
 
-// Counts amount of consecutive squares on line and column
+
+/*
+* Counts amount of consecutive squares on lines and columns and stores this info
+* in l and c structures
+*/
 int countLC (short** l, short** c, short** m, int n){
 	int count = 0;
 	for(int i = 0; i<n; i++){
@@ -79,7 +89,10 @@ int countLC (short** l, short** c, short** m, int n){
 	}
 }
 
-// Generates x and y intervals given the program entry
+/*
+* Interpretes player's input to stores x and y intervales on variables
+* Also informs if is a add or removal action on "a" variable
+*/
 int genIntvls (char* entry, int *x1, int *x2, int *y1, int *y2, char* a){
 	char tmp[12];
 	int x1a, x2a, y1a, y2a;
@@ -120,6 +133,10 @@ int genIntvls (char* entry, int *x1, int *x2, int *y1, int *y2, char* a){
 	return 1;
 }
 
+/*
+*	If all alive cells in a line or column were already found, reveals 
+* automatically all dead cells in that line/column
+*/
 void revealsLC (short** m, short** gab, int n, int i, int j){
 	int rl = 1;
 	int rc = 1;
@@ -136,6 +153,10 @@ void revealsLC (short** m, short** gab, int n, int i, int j){
 			m[i][ja] = gab[i][ja];
 }
 
+/*
+* Takes player's input and discounts errors, also updates matrix to show already
+* found cells
+*/
 int validatesPlay (int x1, int x2, int y1, int y2, char action, int* vidas, short** gab, short** m, int n){
 	int errors = 0;
 	for(int i = x1; i<=x2; i++)
@@ -153,6 +174,9 @@ int validatesPlay (int x1, int x2, int y1, int y2, char action, int* vidas, shor
 		return errors;
 }
 
+/*
+*	Checks if player reach the end by winning
+*/
 int checkWin(short** gab, int n){
 	for(int i = 0; i<n; i++)
 		for(int j = 0; j<n; j++)
@@ -161,6 +185,9 @@ int checkWin(short** gab, int n){
 	return 1;
 }
 
+/*
+* Reveals some dead cells in the begining so the game is easier
+*/
 int revealsX(short** gab, short** m, int n){
 	int count = 0;
 	for(int i = 0; i<n; i++)
