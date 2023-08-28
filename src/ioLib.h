@@ -39,7 +39,7 @@ void printLife(theme* t, int life, int lost, int n);
 
 void printEnd(theme* t, int WL, short** m, int n);
 
-void printInputLine();
+void printInputLine(int missed);
 
 void clear();
 

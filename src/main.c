@@ -21,7 +21,8 @@ int main(int argc, char **argv){
 	char str[12];
 	char action;
 	int vidas = 3;
-	int lost;
+	int lost = 0;
+	int intvlsRet;
 	theme* tm;
 
 	clear();
@@ -55,7 +56,7 @@ int main(int argc, char **argv){
 	// These need to be printed at each play on the game
 	printMat(tm, gab, n);
 	printLife(tm, vidas, lost, n);
-	printInputLine();
+	printInputLine(0);
 
 	// Gets the player input to be interpreted by genIntvls
 	fgets(str, 12, stdin);
@@ -64,10 +65,20 @@ int main(int argc, char **argv){
 		genIntvls take the input string and translates in x and y intervals
 		also says if a play is for adding or removing
 	*/
-	while(genIntvls(str, &y1, &y2, &x1, &x2, &action) && vidas > 0){
-		if(x1<0 || y1<0 || x2>=n || y2>=n){
-			printf("Bad interval given\n");
+	intvlsRet = genIntvls(str, &y1, &y2, &x1, &x2, &action);
+	while(intvlsRet && vidas > 0){
+		if(intvlsRet == 2){
+			printf("\e[F");
+			printInputLine(2);
 			fgets(str, 12, stdin);
+			intvlsRet = genIntvls(str, &y1, &y2, &x1, &x2, &action);
+			continue;
+		}	
+		if(x1<0 || y1<0 || x2>=n || y2>=n){
+			printf("\e[F");
+			printInputLine(1);
+			fgets(str, 12, stdin);
+			intvlsRet = genIntvls(str, &y1, &y2, &x1, &x2, &action);
 			continue;
 		}
 	
@@ -85,10 +96,9 @@ int main(int argc, char **argv){
 		}
 		printMat(tm, gab, n);
 		printLife(tm, vidas, lost, n);
-		printInputLine();
+		printInputLine(0);
 		fgets(str, 12, stdin);
-		if(!strcmp(str, "stop")) break;
-		printf("\n");
+		intvlsRet = genIntvls(str, &y1, &y2, &x1, &x2, &action);
 	}
 	
 	// Free of dinamic variables

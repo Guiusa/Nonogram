@@ -1,8 +1,7 @@
 #include "actionsLib.h"
-#include <stdio.h>
 /*
 * Randomizes drawings in the matrix
-* I thinks this is an interesting algoritm to study and make it better
+* I think this is an interesting algorithm to study and make it better
 */
 int randMat (short** m, int n){
 	int count = 0;
@@ -13,7 +12,7 @@ int randMat (short** m, int n){
 		}
 
 	// randomizes sequences of n cells
-	int c = rand()%(n/2) + n/4;
+	int c = rand()%(n/4) + 1;
 	for(int ip = 0; ip<c; ip++){
 		int lc = rand()%2;
 		if(lc){
@@ -104,8 +103,8 @@ int genIntvls (char* entry, int *x1, int *x2, int *y1, int *y2, char* a){
 	}
 	char xstr[6], ystr[6];
 	if(strchr(entry, ',') == NULL){
-		printf("Parando programa\n");
-		return 0;
+		if(!strcmp(entry, "stop\n")) return 0;	
+		return 2;
 	}
 	sscanf(entry, "%[^,],%s", &xstr, &ystr);
 	

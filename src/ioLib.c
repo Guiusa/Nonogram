@@ -281,6 +281,12 @@ void printGrid(int n){
 /*
 * prints the line were the player's input will be drawn
 */
-void printInputLine(){
-	printf("               <-- YOUR INPUT HERE\r");
+void printInputLine(int missed){
+	printf("               <-- YOUR INPUT HERE");
+	if(missed == 1){
+		printf(" | \e[1;41minput must be between boundaries\e[0m             \r");
+	} else if(missed == 2) {
+		printf(" | \e[1;42mUse <x | x1-x2>,<y | y1-y2> <(A) | r> OR stop\e[0m\r");
+	} else
+		printf(" |                                              \r");
 }

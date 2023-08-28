@@ -20,9 +20,10 @@ each line and column, as represented in the images:
 - [x] Filters player input based on boundaries (input not bigger than n or less than 0)
 - [x] Make a difficult system based on size of grid and revealed cells
 - [x] Add more themes
-- [ ] Add *save drawing* functionality
-- [ ] Add *create drawing* functionality
 - [x] Refactor print functions to use ansi characters and make them less dumb
 - [x] Substitute system("clear") by ansi characters
 - [x] Make an error/usage output function
-- [ ] Add comments in memLib file so the code is more clear
+- [x] Make apropriate warning for boundary-breaking input
+- [ ] Fix input checking
+- [ ] Add *save drawing* functionality
+- [ ] Add *create drawing* functionality
