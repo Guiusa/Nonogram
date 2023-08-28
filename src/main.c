@@ -104,7 +104,7 @@ int main(int argc, char **argv){
 	// Free of dinamic variables
 	freeTheme(tm);
 	freeMat(l, n);
-	freeMat(c, n/2);
+	freeMat(c, n/2 + 1);
 	freeMat(gab, n);
 	freeMat(m, n);
 	return 0;

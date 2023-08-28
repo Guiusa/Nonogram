@@ -142,26 +142,6 @@ void printLife(theme* t, int life, int lost, int n){
 }
 
 /*
-* Reveals all cells to player and a message of win or loss
-*/
-void printEnd(theme* t, int WL, short** m, int n){
-	printf("\n");
-	for(int i = 0; i<n; i++)
-		for(int k = 0; k<2; k++){
-			for(int j = 0; j<n; j++)
-				if(m[i][j] == 1){
-					printf("%s████%s", t->FOUND, t->NRML);
-				} else
-					printf("%sXXXX%s", t->XX, t->NRML);
-			printf("\n");
-		}
-	if(WL){
-		printf("%s\nYOU WON!!%s\n", t->XX, t->NRML);
-	} else
-		printf("%s\nYOU LOST ALL YOUR LIFES!!%s\n", t->XX, t->NRML);
-}
-
-/*
 * Clears the screen with ansii sequences
 */
 void clear(){
@@ -172,6 +152,28 @@ void clear(){
 * Interface so the player can choose if the matrix will have 5, 10 or 15 lines
 * and column
 */
+
+/*
+* Reveals all cells to player and a message of win or loss
+*/
+void printEnd(theme* t, int WL, short** m, int n){
+	clear();
+	for(int i = 0; i<n; i++)
+		for(int k = 0; k<2; k++){
+			for(int j = 0; j<n; j++)
+				if(m[i][j] == 1){
+					printf("%s████%s", t->FOUND, t->NRML);
+				} else
+					printf("%sXXXX%s", t->XX, t->NRML);
+			printf("\n");
+		}
+	if(WL){
+		printf("%s\nYOU WON!!%s \n", t->XX, t->NRML);
+	} else
+		printf("%s\nYOU LOST ALL YOUR LIFES!!%s \n", t->XX, t->NRML);
+}
+
+
 int chooseSize(theme* t){
 	int k;
 	printf("%sCHOOSE THE GRID SIZE:\n(1) - 5\n(2) - 10\n(3) - 15%s\n", t->XX, t->NRML);

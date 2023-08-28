@@ -24,6 +24,6 @@ each line and column, as represented in the images:
 - [x] Substitute system("clear") by ansi characters
 - [x] Make an error/usage output function
 - [x] Make apropriate warning for boundary-breaking input
-- [ ] Fix input checking
+- [x] Fix input checking
 - [ ] Add *save drawing* functionality
 - [ ] Add *create drawing* functionality
