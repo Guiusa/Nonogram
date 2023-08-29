@@ -26,5 +26,5 @@ each line and column, as represented in the images:
 - [x] Make apropriate warning for boundary-breaking input
 - [x] Fix input checking
 - [x] Add CLI options to choose themes and grid size
-- [ ] Fix printing breaking after -s option only
+- [x] Fix printing breaking after -s option only
 - [ ] Save CLI and grid size on a file

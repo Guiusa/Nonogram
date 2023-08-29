@@ -74,12 +74,6 @@ int main(int argc, char **argv){
 	revealsX(gab, m, n);
 
 	clear();
-	/*
-		this getchar is taking residue input from above functions, i don't really
-		know what this does but if a take it off the pogram breaks with segfault
-		:) 
-	*/
-	//getchar();
 	
 	// Static graphics that needs to be printed just once
 	printSeq(tm, l, c, n);
@@ -90,6 +84,9 @@ int main(int argc, char **argv){
 	printLife(tm, vidas, lost, n);
 	printInputLine(0);
 
+	
+	int p;
+	while ((p = getchar()) != '\n' && p != EOF);
 	// Gets the player input to be interpreted by genIntvls
 	fgets(str, 12, stdin);
 	

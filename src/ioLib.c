@@ -42,7 +42,7 @@ void chooseTheme(theme* t, int c){
 	scanf("%d", &k);
 	while(k<1 || k>4){
 		printf("Wrong choice :(\n");
-		scanf("%d ", &k);
+		scanf("%d", &k);
 	}
 	switch_jump:
 	switch (k) {
@@ -185,7 +185,7 @@ int chooseSize(theme* t){
 	scanf("%d", &k);
 	while(k<1 || k>3){
 		printf("%sWRONG CHOICE :(%s\n", t->XX, t->NRML);
-		scanf("%d", &k);
+		scanf(" %d", &k);
 	}
 	return k*5;
 }
