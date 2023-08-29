@@ -29,7 +29,7 @@ typedef struct {
 theme* alocTheme();
 void freeTheme(theme* t);
 
-void chooseTheme(theme* t);
+void chooseTheme(theme* t, int c);
 
 void printMat(theme* t, short** m, int n);
 

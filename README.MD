@@ -25,5 +25,5 @@ each line and column, as represented in the images:
 - [x] Make an error/usage output function
 - [x] Make apropriate warning for boundary-breaking input
 - [x] Fix input checking
-- [ ] Add *save drawing* functionality
-- [ ] Add *create drawing* functionality
+- [ ] Add CLI options to choose themes and grid size
+- [ ] Save CLI and grid size on a file

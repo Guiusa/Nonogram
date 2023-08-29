@@ -2,20 +2,23 @@
 #include "ioLib.h"
 #include "actionsLib.h"
 #include <time.h>
+#include <unistd.h>
+#include <getopt.h>
 
-// To be used
-void show_help(){
-	printf("\
-	[USAGE] nonogram\n\
-	-h\t\tShows this message\n\
-	-d [5,10,15]\tSets the grid's size\n\
-	");
+void show_help(char* name){
+	printf("[USAGE] %s\n\
+-h\t\tShows this message\n\
+-t [1-4]\t\tSets theme automatically\n\
+-s [5,10,15]\tSets the grid's size\n\
+", name);
 }
 
 int main(int argc, char **argv){
 	// Initial declarations
 	srand(time(0));
-	int n;
+	int n = 0;
+	int tc = 0;
+	int opt;
 	short **gab, **m, **l, **c; 
 	int x1, x2, y1, y2; 
 	char str[12];
@@ -25,13 +28,42 @@ int main(int argc, char **argv){
 	int intvlsRet;
 	theme* tm;
 
+	while((opt = getopt(argc, argv, "s:t:h")) > 0){
+		switch(opt){
+			case 'h':
+				show_help(argv[0]);
+				return 0;
+			case 's':
+				n = atoi(optarg);
+				if( n != 5 && n != 10 && n != 15){
+					fprintf(stderr, "Size value should be 5, 10 or 15\n");
+					return 1;
+				}
+				break;
+			case 't':
+				tc = atoi(optarg);
+				if(tc<1 || tc>4){
+					fprintf(stderr, "Theme codes are only 1, 2, 3 or 4");
+					return 1;
+				}
+				break;
+			default:
+				fprintf(stderr, "Invalid option\n");
+				return -1;
+		}
+	}
+
+
 	clear();
 	
 	// alocs dinamic variables
 	tm 	= alocTheme();
-	chooseTheme(tm);
-	n = chooseSize(tm);
- 	m 	= alocMat(n, n);
+	chooseTheme(tm, tc);
+	if(!n){ 
+		n = chooseSize(tm);
+	}
+ 	
+	m 	= alocMat(n, n);
 	gab	= alocMat(n, n);
 	l		= alocMat(n, n/2 + 1);
 	c		= alocMat(n/2 + 1, n);
@@ -47,7 +79,7 @@ int main(int argc, char **argv){
 		know what this does but if a take it off the pogram breaks with segfault
 		:) 
 	*/
-	getchar();
+	//getchar();
 	
 	// Static graphics that needs to be printed just once
 	printSeq(tm, l, c, n);

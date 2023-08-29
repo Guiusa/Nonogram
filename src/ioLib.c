@@ -24,7 +24,12 @@ void freeTheme(theme* t){
 /*
 * Interface to choose a theme to the game
 */
-void chooseTheme(theme* t){
+void chooseTheme(theme* t, int c){
+	int k;
+	if(c){
+		k = c;
+	 	goto switch_jump;
+	}
 	printf("CHOOSE A THEME:\n\n");
 	printf("(1)\tHatsune Miku\t\t\t");
 	printf("\e[0;90m██ \e[0;36m██ \e[0;107m\e[1;35mXX\e[0m\n"); 
@@ -34,12 +39,12 @@ void chooseTheme(theme* t){
 	printf("\e[0;30m██ \e[0;31m██ \e[0;40m\e[1;34mXX\e[0m\n"); 
 	printf("(4)\tBlack & White\t\t\t");
 	printf("\e[0;30m██ \e[0;97m██ \e[0;40m\e[1;97mXX\e[0m\n"); 
-	int k;
 	scanf("%d", &k);
 	while(k<1 || k>4){
 		printf("Wrong choice :(\n");
-		scanf("%d", &k);
+		scanf("%d ", &k);
 	}
+	switch_jump:
 	switch (k) {
 		case 1:
 			strcpy(t->HIDN, "\e[0;90m");
