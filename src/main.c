@@ -27,6 +27,8 @@ int main(int argc, char **argv){
 	int lost = 0;
 	int intvlsRet;
 	theme* tm;
+	int flag_size = 0;
+	int flag_theme = 0;
 
 	while((opt = getopt(argc, argv, "s:t:h")) > 0){
 		switch(opt){
@@ -39,6 +41,7 @@ int main(int argc, char **argv){
 					fprintf(stderr, "Size value should be 5, 10 or 15\n");
 					return 1;
 				}
+				flag_size = 1;
 				break;
 			case 't':
 				tc = atoi(optarg);
@@ -46,6 +49,7 @@ int main(int argc, char **argv){
 					fprintf(stderr, "Theme codes are only 1, 2, 3 or 4");
 					return 1;
 				}
+				flag_theme = 1;
 				break;
 			default:
 				fprintf(stderr, "Invalid option\n");
@@ -62,7 +66,7 @@ int main(int argc, char **argv){
 	if(!n){ 
 		n = chooseSize(tm);
 	}
- 	
+	
 	m 	= alocMat(n, n);
 	gab	= alocMat(n, n);
 	l		= alocMat(n, n/2 + 1);
@@ -86,7 +90,7 @@ int main(int argc, char **argv){
 
 	
 	int p;
-	while ((p = getchar()) != '\n' && p != EOF);
+	if(!flag_size || !flag_theme) while ((p = getchar()) != '\n' && p != EOF);
 	// Gets the player input to be interpreted by genIntvls
 	fgets(str, 12, stdin);
 	
