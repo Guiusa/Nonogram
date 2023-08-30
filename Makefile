@@ -1,4 +1,4 @@
-OBJS= src/memLib.c src/ioLib.c src/actionsLib.c
+OBJS= src/memLib.c src/ioLib.c src/actionsLib.c src/fileLib.c
 
 all:
 	gcc src/main.c ${OBJS} -o nonogram
