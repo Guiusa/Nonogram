@@ -1,20 +1,27 @@
 #include "fileLib.h"
 
-void printFile(){
-	int i;
+void cleanComments(char* variabless){
 	FILE* fp;
 	char string[100];
+	int vp = 0;
 	fp = fopen(CFG, "r");
 	while(fgets(string, 100, fp)){
-		i = 0;
-		while(string[i] != '\0'){
+		for(int i = 0; string[i] != '\0'; i++){
 			if(string[i] == '#'){
-				if(i > 0) printf("\n");
+				if(i > 0){
+					variabless[vp] = '\n';
+					vp++;
+				}
 				break;
 			}
-			printf("%c", string[i]);
-			i++;
+			variabless[vp] = string[i];
+			vp++;
 		}
 	}
 	fclose(fp);
+	variabless[vp] = '\0';
+}
+
+void	getVariables(int* tc, int* n, char* variabless){
+	char aux[80];	
 }

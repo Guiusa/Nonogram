@@ -2,4 +2,5 @@
 #include <stdio.h>
 #define CFG "nonogram.cfg"
 
-void printFile();
+void cleanComments(char* variabless);
+void	getVariables(int* tc, int* n, char* variabless);
