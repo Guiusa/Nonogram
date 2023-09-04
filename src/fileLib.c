@@ -23,5 +23,18 @@ void cleanComments(char* variabless){
 }
 
 void	getVariables(int* tc, int* n, char* variabless){
-	char aux[80];	
+	char* tk = strtok(variabless, "\n");
+	while(tk != NULL){
+		char key[30];
+		int value;
+
+		if(sscanf(tk, "%s %d", key, &value) == 2){
+			if(! strcmp(key, "THEME")) *tc = value;
+			if(! strcmp(key, "SIZE")) *n = value;
+		}
+	
+		tk = strtok(NULL, "\n"); 
+	}
 }
+
+
