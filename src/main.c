@@ -1,6 +1,7 @@
 #include "memLib.h"
 #include "ioLib.h"
 #include "actionsLib.h"
+#include "fileLib.h"
 #include <time.h>
 #include <unistd.h>
 #include <getopt.h>
@@ -29,6 +30,7 @@ int main(int argc, char **argv){
 	theme* tm;
 	int flag_size = 0;
 	int flag_theme = 0;
+	char *variabless = (char*) malloc(100 * sizeof(char));
 
 	while((opt = getopt(argc, argv, "s:t:h")) > 0){
 		switch(opt){
@@ -41,7 +43,6 @@ int main(int argc, char **argv){
 					fprintf(stderr, "Size value should be 5, 10 or 15\n");
 					return 1;
 				}
-				flag_size = 1;
 				break;
 			case 't':
 				tc = atoi(optarg);
@@ -49,14 +50,16 @@ int main(int argc, char **argv){
 					fprintf(stderr, "Theme codes are only 1, 2, 3 or 4");
 					return 1;
 				}
-				flag_theme = 1;
 				break;
 			default:
 				fprintf(stderr, "Invalid option\n");
 				return -1;
 		}
 	}
-
+	
+	getVariables(&tc, &n);
+	if(tc) flag_theme = 1;
+	if(n) flag_size = 1;
 
 	clear();
 	
@@ -140,5 +143,6 @@ int main(int argc, char **argv){
 	freeMat(c, n/2 + 1);
 	freeMat(gab, n);
 	freeMat(m, n);
+	free(variabless);
 	return 0;
 }
