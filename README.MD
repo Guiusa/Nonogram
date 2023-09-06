@@ -27,4 +27,4 @@ each line and column, as represented in the images:
 - [x] Fix input checking
 - [x] Add CLI options to choose themes and grid size
 - [x] Fix printing breaking after -s option only
-- [ ] Save CLI and grid size on a file
+- [x] Save theme and grid size on a file
